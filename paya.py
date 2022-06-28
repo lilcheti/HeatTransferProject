@@ -57,9 +57,9 @@ print("first lane:",Tfirst)
 #left corner up
 a[0] = deltax/deltay+deltay/deltax
 a[1] = -deltay/deltax
-a[6] = -deltax/(2*deltay)
+a[Nx] = -deltax/(2*deltay)
 A.append(a)
-B.append((q*deltay/k)+(deltax*Tfirst[0]/(2*deltay)))
+B.append((q*deltay/k)+((deltax*Tfirst[0])/(2*deltay)))
 
 a = []
 for i in range(0,(Nx*Ny)):
@@ -76,9 +76,9 @@ a = []
 for i in range(0,(Nx*Ny)):
     a.append(0)
 #left corner bottom
-a[Ny*Nx] = (deltax/(2*deltay))+(deltay/(2*deltax))
-a[(Ny-1)*Nx] = deltax/(2*deltay)
-a[1+Nx*Ny] = deltay/(2*deltax)
+a[(Ny-1)*Nx] = (deltax/(2*deltay))+(deltay/(2*deltax))
+a[(Ny-2)*Nx] = -deltax/(2*deltay)
+a[1+Nx*(Ny-1)] = -deltay/(2*deltax)
 A.append(a)
 B.append(q*deltay/(2*k))
 
@@ -87,17 +87,71 @@ for i in range(0,(Nx*Ny)):
     a.append(0)
 	
 #right corner bottom
-a[Nx+Ny*Nx] = deltax/(2*deltay)+deltay/(2*deltax)+hinf*deltay/(2*k)
-a[Nx+(Ny-1)*Nx] = deltax/(2*deltay)
-a[Nx-1+Ny*Nx] = deltay/(2*deltax)
+a[Nx-1+Nx*(Ny-1)] = deltax/(2*deltay)+deltay/(2*deltax)+hinf*deltay/(2*k)
+a[Nx-1+Nx*(Ny-2)] = -deltax/(2*deltay)
+a[Nx-2+Nx*(Ny-1)] = -deltay/(2*deltax)
 A.append(a)
 B.append(hinf*deltay*Tinf/(2*k))
 
-a = []
-for i in range(0,(Nx*Ny)):
-    a.append(0)
 
 
+#right lane
+for j in range(1,Ny-1):
+	a = []
+	for i in range(0,(Nx*Ny)):
+		a.append(0)
+	a[Nx-1+j*Nx] = deltax/deltay+deltay/deltax+hinf*deltay/k
+	a[Nx-1+Nx*(j-1)] = -deltax/(2*deltay)
+	a[Nx-1+Nx*(j+1)] = -deltax/(2*deltay)
+	A.append(a)
+	B.append(hinf*deltay*Tinf/k)
+
+#left lane
+for j in range(1,Ny-1):
+	a = []
+	for i in range(0,(Nx*Ny)):
+		a.append(0)
+	a[Nx*j] = deltax/deltay + deltay/deltax
+	a[1+j*Nx] = -deltay/deltax
+	a[Nx*(j-1)] = -deltax/(2*deltay)
+	a[Nx*(j+1)] = -deltax/(2*deltay)
+	A.append(a)
+	B.append(q*deltay/k)
+#top lane
+for i in range(1,Nx-1):
+	a = []
+	for k in range(0,(Nx*Ny)):
+		a.append(0)
+	a[i] = 2*deltax/deltay+2*deltay/deltax
+	a[i+1] = -deltay/deltax
+	a[i+Nx] = -deltax/deltay
+	a[i-1] = -deltay/deltax
+	A.append(a)
+	B.append(deltax*Tfirst[i]/deltay)
+#bottom lane
+for i in range(1,Nx-1):
+	a = []
+	for k in range(0,(Nx*Ny)):
+		a.append(0)
+	a[i+Nx*(Ny-1)] = deltax/deltay + deltay/deltax
+	a[i+Nx*(Ny-2)] = -deltax/deltay
+	a[i+1+Nx*(Ny-1)] = -deltay/(2*deltax)
+	a[i-1+(Nx*(Ny-1))] = -deltay/(2*deltax)
+	A.append(a)
+	B.append(0)
+#inside
+for i in range(1,Nx-1):
+	for j in range(1,Ny-1):
+		a = []
+		for k in range(0,(Nx*Ny)):
+			a.append(0)
+		a[i+j*Nx] = 2*deltax/deltay+2*deltay/deltax
+		a[i+(j-1)*Nx] = -deltax/deltay
+		a[i+1+j*Nx] = -deltay/deltax
+		a[i+(j+1)*Nx] = -deltax/deltay
+		a[i-1+j*Nx] = -deltay/deltax
+		A.append(a)
+		B.append(0)
 
 print(A,B)
 
