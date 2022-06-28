@@ -6,7 +6,7 @@ from math import pi, sin
 def seidel(a, x ,b):
 	#Finding length of a(3)	
 	n = len(a)				
-	print(n)
+	#print(n)
 	# for loop for 3 times as to calculate x, y , z
 	for j in range(0, n):		
 		# temp variable d to store b[j]
@@ -161,4 +161,4 @@ print(A,B)
 for i in range(0, 25):			
 	T = seidel(A, T, B)
 	#print each time the updated solution
-	print(T)					
+print(T)					
