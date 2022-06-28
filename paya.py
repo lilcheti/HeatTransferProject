@@ -6,6 +6,7 @@ from math import pi, sin
 def seidel(a, x ,b):
 	#Finding length of a(3)	
 	n = len(a)				
+	print(n)
 	# for loop for 3 times as to calculate x, y , z
 	for j in range(0, n):		
 		# temp variable d to store b[j]
@@ -15,8 +16,9 @@ def seidel(a, x ,b):
 		for i in range(0, n):	
 			if(j != i):
 				d-=a[j][i] * x[i]
-		# updating the value of our solution		
-		x[j] = d / a[j][j]
+		# updating the value of our solution	
+		if a[j][j] != 0:	
+			x[j] = d / a[j][j]
 	# returning our updated solution		
 	return x
 
@@ -45,7 +47,7 @@ A = []
 B = []
 a = []
 for i in range(0,(Nx*Ny)):
-    T.append(0)
+    T.append(100)
     a.append(0)
 
 #first lane 
