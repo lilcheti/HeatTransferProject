@@ -4,15 +4,15 @@
 from math import pi, sin
 
 def seidel(a, x ,b):
-	#Finding length of a(3)	
+	#Finding length of a	
 	n = len(a)				
 	#print(n)
-	# for loop for 3 times as to calculate x, y , z
+	# for loop for to calculate x1, x2, ...
 	for j in range(0, n):		
 		# temp variable d to store b[j]
 		d = b[j]				
 		
-		# to calculate respective xi, yi, zi
+		# to calculate respective x1i, x2i, ...
 		for i in range(0, n):	
 			if(j != i):
 				d-=a[j][i] * x[i]
